@@ -1,0 +1,47 @@
+name: foodie_mobile
+description: "Recipe App."
+
+publish_to: 'none'
+
+
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.1 <4.0.0'
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+  http: ^1.0.0
+  webview_flutter: ^4.7.0
+  google_maps_flutter: ^2.6.1
+  cupertino_icons: ^1.0.6
+  google_fonts: ^6.2.0
+  smooth_page_indicator: ^1.0.0+2
+  carousel_slider: ^4.2.1
+  curved_navigation_bar: ^1.0.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+
+
+flutter:
+
+
+  uses-material-design: true
+
+  assets:
+    - lib/images/meal.png
+    - lib/images/healthy-food.png
+    - lib/images/meal2.png
+    - lib/images/food.png
+    - lib/images/google.png
+    - lib/recipe_files/recipes.json
+    - lib/images/take_me_random.jpg
+    - lib/recipe_files/recipes.json
+    - lib/images/googlemaps.png
