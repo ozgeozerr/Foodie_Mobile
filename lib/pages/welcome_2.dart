@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Welcome2 extends StatelessWidget {
-  const Welcome2({Key? key}) : super(key: key);
+  const Welcome2({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +21,8 @@ class Welcome2 extends StatelessWidget {
                     width: 500,
                     height: 250,
                   ),
-                  SizedBox(height: 20),
-                  Text(
+                  const SizedBox(height: 20),
+                  const Text(
                     'Foodie is designed to help you discover, save, and cook delicious recipes from around the world.',
                     style: TextStyle(
                       color: Colors.white,

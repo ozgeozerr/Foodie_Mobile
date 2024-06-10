@@ -36,7 +36,7 @@ class _MapPageState extends State<MapPage> {
      iconTheme: const IconThemeData(color: Colors.white, size: 25),
    ),
    body: GoogleMap(
-     initialCameraPosition: CameraPosition(
+     initialCameraPosition: const CameraPosition(
        target: MapPage.googlePlex,
        zoom: 14,
      ),

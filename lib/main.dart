@@ -1,11 +1,21 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:foodie_mobile/pages/discover_page.dart';
+import 'package:foodie_mobile/pages/welcome_1.dart';
+import 'package:foodie_mobile/pages/welcome_2.dart';
+import 'package:foodie_mobile/pages/welcome_3.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'pages/welcome_1.dart';
-import 'pages/welcome_2.dart';
-import 'pages/welcome_3.dart';
+import 'firebase_options.dart';
 
-void main() {
-  runApp(MyApp());
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -21,10 +31,29 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   final _controller = PageController();
 
-  HomePage({Key? key}) : super(key: key);
+  @override
+  void initState() {
+    super.initState();
+
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (user != null) {
+
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => DiscoverPage()),
+        );
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 class AboutFoodiePage extends StatelessWidget {
-  const AboutFoodiePage({Key? key}) : super(key: key);
+  const AboutFoodiePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('About Foodie'),
+        title: const Text('About Foodie'),
       ),
-      body: Center(
+      body: const Center(
         child: Text(''),
       ),
     );

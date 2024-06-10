@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Welcome1 extends StatelessWidget {
-  const Welcome1({Key? key}) : super(key: key);
+  const Welcome1({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +23,8 @@ class Welcome1 extends StatelessWidget {
                   width: 500,
                   height: 250,
                 ),
-                SizedBox(height: 10),
-                Text(
+                const SizedBox(height: 10),
+                const Text(
                   'Welcome to Foodie!',
                   style: TextStyle(
                     color: Colors.white,

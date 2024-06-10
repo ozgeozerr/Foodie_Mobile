@@ -54,15 +54,15 @@ class DessertRecipesPage extends StatelessWidget {
                   Container(
                     color: Colors.black.withOpacity(0.3),
                     width: double.infinity,
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0), // Adjust padding
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                     child: Text(
                       recipe.name ?? '',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white, // Text color
+                        color: Colors.white,
                       ),
-                      textAlign: TextAlign.center, // Center align text
+                      textAlign: TextAlign.center,
                     ),
                   ),
                 ],

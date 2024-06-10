@@ -5,7 +5,7 @@ import 'package:foodie_mobile/pages/recipe_detail_page.dart';
 class SnackRecipesPage extends StatelessWidget {
   final List<Recipe> recipes;
 
-  const SnackRecipesPage({Key? key, required this.recipes}) : super(key: key);
+  const SnackRecipesPage({super.key, required this.recipes});
 
   @override
   Widget build(BuildContext context) {
@@ -54,15 +54,15 @@ class SnackRecipesPage extends StatelessWidget {
                   Container(
                     color: Colors.black.withOpacity(0.3),
                     width: double.infinity,
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0), // Adjust padding
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                     child: Text(
                       recipe.name ?? '',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white, // Text color
+                        color: Colors.white,
                       ),
-                      textAlign: TextAlign.center, // Center align text
+                      textAlign: TextAlign.center,
                     ),
                   ),
                 ],

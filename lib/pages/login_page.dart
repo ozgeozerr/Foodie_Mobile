@@ -1,36 +1,59 @@
-import 'dart:convert';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:foodie_mobile/components/my_button_signin.dart';
 import 'package:foodie_mobile/components/my_textfield.dart';
 import 'package:foodie_mobile/pages/discover_page.dart';
 
-import '../models/recipe.dart';
+import 'create_account_page.dart';
 
-class LoginPage extends StatelessWidget {
-  LoginPage({super.key});
+class LoginPage extends StatefulWidget {
+  LoginPage({Key? key}) : super(key: key);
+
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
+  Future<void> _signInWithEmailAndPassword() async {
+    try {
+      UserCredential userCredential = await _firebaseAuth.signInWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+
+      User? user = userCredential.user;
+
+      if (user != null) {
+        await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+          'email': user.email ?? '',
+          'uid': user.uid ?? '',
+        }, SetOptions(merge: true));
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => DiscoverPage()),
+        );
+      }
+    } catch (e) {
+      print('Error signing in: $e');
+    }
+  }
 
 
-  final userNameController = TextEditingController();
-  final passwordController = TextEditingController();
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    Future<void> signUserIn() async {
-
-      String data = await rootBundle.loadString('lib/recipe_files/recipes.json');
-      final List<dynamic> jsonResult = json.decode(data);
-
-
-      List<Recipe> recipeList = jsonResult.map((element) => Recipe.fromJson(element)).toList();
-
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const DiscoverPage()),
-      );
-    }
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xffefeef4),
@@ -58,52 +81,39 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 30),
-              //username textfield
+
               MyTextField(
-                controller: userNameController,
-                hintText: 'Username',
+                controller: _emailController,
+                hintText: 'Email',
                 obscureText: false,
               ),
               const SizedBox(height: 15),
-              //password textfield
+
               MyTextField(
-                controller: passwordController,
+                controller: _passwordController,
                 hintText: 'Password',
                 obscureText: true,
               ),
               const SizedBox(height: 20),
-              Text(
-                "Don't have an account? Register now!",
-                style: TextStyle(
-                  fontWeight: FontWeight.w800,
-                  fontSize: 15,
-                  color: Colors.grey.shade700,
-                ),
-              ),
-              const SizedBox(height: 20),
-              //sign in button
+
               MyButton(
-                onTap: signUserIn,
+                onTap: _signInWithEmailAndPassword,
               ),
               const SizedBox(height: 20),
-              const Text(
-                'or continue with',
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  //login with google button
-                  Image.asset(
-                    'lib/images/google.png',
-                    height: 70,
-                    width: 50,
+
+              TextButton(
+                onPressed: () {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => CreateAccountPage()));
+                },
+                child: Text(
+                  'Create New Account',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 17,
                   ),
-                ],
-              ),
+                ),
+              )
             ],
           ),
         ),

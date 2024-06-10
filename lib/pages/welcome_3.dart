@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'login_page.dart';
 
 class Welcome3 extends StatelessWidget {
-  const Welcome3({Key? key}) : super(key: key);
+  const Welcome3({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,12 +26,12 @@ class Welcome3 extends StatelessWidget {
                       width: 500,
                       height: 250,
                     ),
-                    SizedBox(height: 10),
-                    Text(
-                      "Let's Start Discovering New Recipes!",
+                    const SizedBox(height: 10),
+                    const Text(
+                      "You can add your favorites to your Favorites List and create your own Shopping List!",
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 22,
+                        fontSize: 21,
                         fontWeight: FontWeight.bold,
                       ),
                       textAlign: TextAlign.center,
@@ -40,7 +40,7 @@ class Welcome3 extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             ElevatedButton(
               onPressed: () {
@@ -54,10 +54,10 @@ class Welcome3 extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 backgroundColor: Colors.red,
-                fixedSize: Size(200, 50),
+                fixedSize: const Size(200, 50),
               ),
-              child: Text(
-                'Sign In',
+              child: const Text(
+                "Let's Start!",
                 style: TextStyle(
                   fontSize: 25,
                   color: Colors.white,

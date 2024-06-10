@@ -15,8 +15,6 @@ import 'dessert_recipes_page.dart';
 import 'favorites_page.dart';
 
 class DiscoverPage extends StatefulWidget {
-  const DiscoverPage({Key? key}) : super(key: key);
-
   @override
   _DiscoverPageState createState() => _DiscoverPageState();
 }
@@ -26,11 +24,14 @@ class _DiscoverPageState extends State<DiscoverPage> {
   late Future<List<Recipe>> _recipeFuture;
   List<Recipe> _recipeList = [];
 
-
   @override
   void initState() {
     super.initState();
-    _loadInitialRecipes();
+    _loadInitialData();
+  }
+
+  Future<void> _loadInitialData() async {
+    await _loadInitialRecipes(); // Load recipes asynchronously
   }
 
   Future<void> _loadInitialRecipes() async {
@@ -73,17 +74,20 @@ class _DiscoverPageState extends State<DiscoverPage> {
           List<Recipe> snackRecipes = recipeList
               .where((recipe) => recipe.mealType?.contains('Snack') ?? false)
               .toList();
-          return _buildDiscoverPage(context, recipeList, dinnerList, soupRecipes, dessertRecipes, snackRecipes);
+          return _buildDiscoverPage(context, recipeList, dinnerList, soupRecipes,
+              dessertRecipes, snackRecipes);
         }
       },
     );
   }
 
-
-
-
-  Widget _buildDiscoverPage(BuildContext context, List<Recipe> recipeList,
-      List<Recipe> dinnerRecipes, List <Recipe> soupRecipes, List <Recipe> dessertRecipes, List <Recipe> snackRecipes) {
+  Widget _buildDiscoverPage(
+      BuildContext context,
+      List<Recipe> recipeList,
+      List<Recipe> dinnerRecipes,
+      List<Recipe> soupRecipes,
+      List<Recipe> dessertRecipes,
+      List<Recipe> snackRecipes) {
     List<String> categories = ['Soups', 'Main Courses', 'Snacks', 'Desserts'];
 
     return Scaffold(
@@ -286,6 +290,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                   ),
                 ),
               ),
+
               Padding(
                 padding: const EdgeInsets.all(5),
                 child: ElevatedButton(
@@ -340,11 +345,16 @@ class _DiscoverPageState extends State<DiscoverPage> {
           });
           switch (index) {
             case 0:
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => FavoritesPage()));
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => FavoritesPage(),
+                ),
+              );
               break;
             case 1:
               break;
+
             case 2:
               Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (context) => UserPage()));
@@ -353,6 +363,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
         },
         index: _currentIndex,
       ),
+
     );
   }
 }
