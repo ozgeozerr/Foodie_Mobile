@@ -26,6 +26,9 @@ dependencies:
   firebase_core: ^3.0.0
   firebase_auth: 5.0.0
   cloud_firestore: ^5.0.0
+  geolocator: ^12.0.0
+  geocoding: ^3.0.0
+  permission_handler: ^11.3.1
 
 
 dev_dependencies:
@@ -42,11 +45,15 @@ flutter:
 
   assets:
     - lib/images/meal.png
-    - lib/images/healthy-food.png
-    - lib/images/meal2.png
+    - lib/images/appicon.png
     - lib/images/food.png
-    - lib/images/google.png
     - lib/recipe_files/recipes.json
     - lib/images/take_me_random.jpg
     - lib/recipe_files/recipes.json
     - lib/images/googlemaps.png
+    - lib/images/appicon.png
+    - lib/images/help.png
+
+flutter_icons:
+  android: true
+  image_path: "lib/images/appicon.png"

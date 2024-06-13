@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'login_page.dart';
 
 class Welcome3 extends StatelessWidget {
-  const Welcome3({super.key});
+ final PageController ctrl;
+  const Welcome3({super.key, required this.ctrl});
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +23,13 @@ class Welcome3 extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset(
-                      'lib/images/meal2.png',
+                      'lib/images/appicon.png',
                       width: 500,
                       height: 250,
                     ),
                     const SizedBox(height: 10),
                     const Text(
-                      "You can add your favorites to your Favorites List and create your own Shopping List!",
+                      "You can add your favorites to your Favorites List and see the grocery stores near you!",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 21,
@@ -44,6 +45,7 @@ class Welcome3 extends StatelessWidget {
 
             ElevatedButton(
               onPressed: () {
+                ctrl.jumpToPage(0);
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => LoginPage()),

@@ -62,21 +62,35 @@ class RandomPage extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Text(
+                          randomRecipe.name ?? '',
+                          style: const TextStyle(
+                              fontSize: 23, fontWeight: FontWeight.w500),
+                        ),
+
+                        const SizedBox(height: 20),
                         const Text(
                           'Ingredients:',
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 18),
                         ),
-                        const SizedBox(height: 8),
-                        Text(randomRecipe.ingredients?.join(', ') ?? ''),
                         const SizedBox(height: 16),
+                        Text(
+                          (randomRecipe.ingredients?.map((ingredients) => '• ${ingredients.trim()}').join('\n') ?? ''),
+                          style: TextStyle(fontSize: 16.0),
+                        ),
+                        SizedBox(height: 20),
                         const Text(
                           'Instructions:',
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                         const SizedBox(height: 8),
-                        Text(randomRecipe.instructions?.join('\n') ?? ''),
+                        Text(
+                          (randomRecipe.instructions?.map((instruction) => '• ${instruction.trim()}').join('\n') ?? ''),
+                          style: TextStyle(fontSize: 16.0),
+                        )
+
                       ],
                     ),
                   ),

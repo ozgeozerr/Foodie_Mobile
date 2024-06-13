@@ -2,33 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:foodie_mobile/models/recipe.dart';
 import 'package:foodie_mobile/pages/recipe_detail_page.dart';
 
-class DinnerRecipesPage extends StatelessWidget {
+class BeverageRecipesPage extends StatelessWidget {
   final List<Recipe> recipes;
 
-  const DinnerRecipesPage({super.key, required this.recipes});
+  const BeverageRecipesPage({Key? key, required this.recipes}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    List<Recipe> dinnerRecipes = recipes.where((recipe) => recipe.mealType?.contains('Dinner') ?? false).toList();
+    List<Recipe> beverageRecipes = recipes.where((recipe) => recipe.mealType?.contains('Beverage') ?? false).toList();
 
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Dinner Recipes',
+          'Beverage Recipes',
           style: TextStyle(
             fontSize: 26,
             color: Colors.white,
           ),
         ),
-        centerTitle: true,
+
         backgroundColor: Colors.red,
         elevation: 5,
         iconTheme: const IconThemeData(color: Colors.white, size: 25),
       ),
       body: ListView.builder(
-        itemCount: dinnerRecipes.length,
+        itemCount: beverageRecipes.length,
         itemBuilder: (context, index) {
-          Recipe recipe = dinnerRecipes[index];
+          Recipe recipe = beverageRecipes[index];
 
           return GestureDetector(
             onTap: () {

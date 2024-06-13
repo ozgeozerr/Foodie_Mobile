@@ -1,7 +1,9 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:foodie_mobile/models/recipe.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class RecipeDetailPage extends StatefulWidget {
   final Recipe recipe;
@@ -23,10 +25,12 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
           .collection('users')
           .doc(user.uid)
           .get();
-
+      log(userDoc['favorites'].length.toString());
       setState(() {
-        isFavorite = userDoc['favorites'] != null &&
-            userDoc['favorites'].contains(widget.recipe.id);
+        isFavorite = userDoc['favorites']
+                ?.map((e) => e["id"] == widget.recipe.id.toString())
+                .contains(true) ??
+            false;
       });
     }
   }
@@ -36,7 +40,7 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
 
     if (user != null) {
       DocumentReference userDocRef =
-      FirebaseFirestore.instance.collection('users').doc(user.uid);
+          FirebaseFirestore.instance.collection('users').doc(user.uid);
 
       if (isFavorite) {
         await userDocRef.update({
@@ -56,7 +60,9 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
         });
 
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Removed from My Favorites.')),
+          const SnackBar(
+              content: Text('Removed from My Favorites.'),
+              duration: Duration(milliseconds: 350)),
         );
       } else {
         await userDocRef.update({
@@ -76,12 +82,14 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
         });
 
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Added to My Favorites.')),
+          const SnackBar(
+            content: Text('Added to My Favorites.'),
+            duration: Duration(milliseconds: 350),
+          ),
         );
       }
     }
   }
-
 
   @override
   void initState() {
@@ -126,19 +134,72 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
               width: double.infinity,
             ),
             const SizedBox(height: 8),
-            const Text(
-              'Ingredients:',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            Text(
+              widget.recipe.name ?? '',
+              style: const TextStyle(fontSize: 23, fontWeight: FontWeight.w500),
             ),
             const SizedBox(height: 8),
-            Text(widget.recipe.ingredients?.join(', ') ?? ''),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: Colors.green.shade400.withOpacity(0.8),
+                ),
+                child: Center(
+                  child: Text(
+                    'Ingredients',
+                    style: GoogleFonts.libreBaskerville(
+                      textStyle: const TextStyle(
+                        fontWeight: FontWeight.w800,
+                        fontSize: 22,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 8),
+            Text(
+              (widget.recipe.ingredients
+                      ?.map((ingredients) => '• ${ingredients.trim()}')
+                      .join('\n') ??
+                  ''),
+              style: const TextStyle(fontSize: 16.0),
+            ),
             const SizedBox(height: 16),
-            const Text(
-              'Instructions:',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: Colors.red.shade400.withOpacity(0.8),
+                ),
+                child: Center(
+                  child: Text(
+                    'Instructions',
+                    style: GoogleFonts.libreBaskerville(
+                      textStyle: const TextStyle(
+                        fontWeight: FontWeight.w800,
+                        fontSize: 22,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ),
             const SizedBox(height: 8),
-            Text(widget.recipe.instructions?.join('\n') ?? ''),
+            Text(
+              (widget.recipe.instructions
+                      ?.map((instruction) => '• ${instruction.trim()}')
+                      .join('\n') ??
+                  ''),
+              style: const TextStyle(fontSize: 16.0),
+            )
           ],
         ),
       ),

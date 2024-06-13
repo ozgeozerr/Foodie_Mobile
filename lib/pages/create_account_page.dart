@@ -1,7 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:foodie_mobile/pages/discover_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'discover_page.dart';
 
 class CreateAccountPage extends StatelessWidget {
   const CreateAccountPage({Key? key}) : super(key: key);
@@ -14,7 +17,7 @@ class CreateAccountPage extends StatelessWidget {
       );
 
       User? user = userCredential.user;
-
+log(user.toString());
       if (user != null) {
         await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
           'email': user.email ?? '',
@@ -58,26 +61,24 @@ class CreateAccountPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextField(
-              decoration: const InputDecoration(labelText: 'Email'),
               onChanged: (value) => email = value,
+              decoration: const InputDecoration(labelText: 'Email'),
             ),
             const SizedBox(height: 16),
             TextField(
-              decoration: const InputDecoration(labelText: 'Password'),
               onChanged: (value) => password = value,
+              decoration: const InputDecoration(labelText: 'Password'),
               obscureText: true,
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 30),
             ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red.shade400,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(40),
-                ),
-              ),
               onPressed: () => _createUserAccount(context, email, password),
-              child: const Padding(
-                padding: EdgeInsets.symmetric(vertical: 16),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 15),
                 child: Text(
                   'Create Account',
                   style: TextStyle(
@@ -87,6 +88,7 @@ class CreateAccountPage extends StatelessWidget {
                 ),
               ),
             ),
+
           ],
         ),
       ),

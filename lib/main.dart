@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:foodie_mobile/pages/discover_page.dart';
@@ -7,7 +9,6 @@ import 'package:foodie_mobile/pages/welcome_3.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'firebase_options.dart';
-
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,6 +48,7 @@ class _HomePageState extends State<HomePage> {
 
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user != null) {
+        log(user.toString());
 
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => DiscoverPage()),
@@ -69,10 +71,10 @@ class _HomePageState extends State<HomePage> {
                 width: 400,
                 child: PageView(
                   controller: _controller,
-                  children: const [
+                  children:  [
                     Welcome1(),
                     Welcome2(),
-                    Welcome3(),
+                    Welcome3(ctrl: _controller,),
                   ],
                 ),
               ),

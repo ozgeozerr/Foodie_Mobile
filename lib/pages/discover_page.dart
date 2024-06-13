@@ -11,6 +11,8 @@ import 'package:foodie_mobile/pages/recipe_detail_page.dart';
 import 'package:foodie_mobile/pages/random_page.dart';
 import 'package:foodie_mobile/pages/map_page.dart';
 import '../components/recipe_service.dart';
+import 'beverage_recipes_page.dart';
+import 'breakfast_recipes_page.dart';
 import 'dessert_recipes_page.dart';
 import 'favorites_page.dart';
 
@@ -21,7 +23,7 @@ class DiscoverPage extends StatefulWidget {
 
 class _DiscoverPageState extends State<DiscoverPage> {
   int _currentIndex = 1;
-  late Future<List<Recipe>> _recipeFuture;
+  Future<List<Recipe>>? _recipeFuture;
   List<Recipe> _recipeList = [];
 
   @override
@@ -74,8 +76,17 @@ class _DiscoverPageState extends State<DiscoverPage> {
           List<Recipe> snackRecipes = recipeList
               .where((recipe) => recipe.mealType?.contains('Snack') ?? false)
               .toList();
+
+          List<Recipe> breakfastRecipes = recipeList
+              .where((recipe) => recipe.mealType?.contains('Breakfast') ?? false)
+              .toList();
+
+          List<Recipe> beverageRecipes = recipeList
+              .where((recipe) => recipe.mealType?.contains('Beverage') ?? false)
+              .toList();
+
           return _buildDiscoverPage(context, recipeList, dinnerList, soupRecipes,
-              dessertRecipes, snackRecipes);
+              dessertRecipes, snackRecipes, breakfastRecipes,beverageRecipes);
         }
       },
     );
@@ -87,9 +98,10 @@ class _DiscoverPageState extends State<DiscoverPage> {
       List<Recipe> dinnerRecipes,
       List<Recipe> soupRecipes,
       List<Recipe> dessertRecipes,
-      List<Recipe> snackRecipes) {
-    List<String> categories = ['Soups', 'Main Courses', 'Snacks', 'Desserts'];
-
+      List<Recipe> snackRecipes,
+      List<Recipe> breakfastRecipes,
+      List<Recipe> beverageRecipes,
+      {List<String> categories = const ['Soups', 'Main Courses', 'Snacks', 'Desserts', 'Breakfast', 'Beverages']}) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -171,7 +183,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
-                    color: Colors.green.shade300.withOpacity(0.8),
+                    color: Colors.green.shade400.withOpacity(0.8),
                   ),
                   child: Center(
                     child: Text(
@@ -204,9 +216,19 @@ class _DiscoverPageState extends State<DiscoverPage> {
                       case 2:
                         buttonColor = Colors.blue.shade400;
                         break;
-                      default:
+                      case 3:
+                        buttonColor = Colors.green.shade400;
+                        break;
+                      case 4:
                         buttonColor = Colors.purple.shade400;
                         break;
+                      case 5:
+                        buttonColor = Colors.orange.shade400;
+                        break;
+                      default:
+                        buttonColor = Colors.grey; // Default color if needed
+                        break;
+
                     }
                     return Padding(
                       padding: const EdgeInsets.symmetric(
@@ -244,6 +266,23 @@ class _DiscoverPageState extends State<DiscoverPage> {
                                 MaterialPageRoute(
                                     builder: (context) => DessertRecipesPage(
                                         recipes: dessertRecipes)),
+                              );
+                              break;
+                            case 4:
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => BreakfastRecipesPage(
+                                        recipes: breakfastRecipes)),
+                              );
+                              break;
+
+                            case 5:
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => BeverageRecipesPage(
+                                        recipes: beverageRecipes)),
                               );
                               break;
                           }
@@ -290,7 +329,6 @@ class _DiscoverPageState extends State<DiscoverPage> {
                   ),
                 ),
               ),
-
               Padding(
                 padding: const EdgeInsets.all(5),
                 child: ElevatedButton(
@@ -316,7 +354,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -354,7 +392,6 @@ class _DiscoverPageState extends State<DiscoverPage> {
               break;
             case 1:
               break;
-
             case 2:
               Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (context) => UserPage()));
@@ -363,7 +400,6 @@ class _DiscoverPageState extends State<DiscoverPage> {
         },
         index: _currentIndex,
       ),
-
     );
   }
 }
