@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "666155315389",
+    "project_id": "foodie-mobile-3c490",
+    "storage_bucket": "foodie-mobile-3c490.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:666155315389:android:608bbe7c9bdea7104787d4",
+        "android_client_info": {
+          "package_name": "ozge.ozer.foodie_mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTEuXNB8OF7CbvseYtCyKGe0J5bM7DDWk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
